@@ -20,8 +20,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddDefaultTokenProviders();
 // db context
 builder.Services.AddDbContext<ECommerceContext>(options =>
-                 options.UseSqlServer("Data Source=DESKTOP-LEVKLCV\\SQLEXPRESS;Database=ECommerceApp; Integrated Security=True"));
-
+                 options.UseSqlServer(builder.Configuration.GetConnectionString("ECommerceShop")));//"Data Source=DESKTOP-LEVKLCV\\SQLEXPRESS;Database=ECommerceApp; Integrated Security=True"
+//builder.Services.AddTransient<DbInitializer>();
 // Adding Authentication
 builder.Services.AddAuthentication(options =>
 {
@@ -53,6 +53,25 @@ builder.Services.AddCors(options =>
                       });
 });
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = scope.ServiceProvider.GetRequiredService<ECommerceContext>();
+    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+    await DbInitializer.Initialize(context);
+
+    //try
+    //{
+    //    await context.Database.MigrateAsync();
+    //    await DbInitializer.Initialize(context);
+    //}
+    //catch (Exception ex)
+    //{
+    //    logger.LogError(ex, "Problem migrating data");
+    //}
+
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
