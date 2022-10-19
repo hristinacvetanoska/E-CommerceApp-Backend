@@ -1,4 +1,5 @@
 using E_CommerceApp_Backend.Authentication;
+using E_CommerceApp_Backend.Middleware;
 using E_CommerceApp_Backend.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -49,7 +50,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       builder =>
                       {
-                          builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                          builder.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");//AllowAnyOrigin().
                       });
 });
 var app = builder.Build();
@@ -72,7 +73,7 @@ using (var scope = app.Services.CreateScope())
     //}
 
 }
-
+app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

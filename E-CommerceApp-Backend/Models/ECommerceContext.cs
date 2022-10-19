@@ -9,6 +9,8 @@ namespace E_CommerceApp_Backend.Models
         public ECommerceContext(DbContextOptions<ECommerceContext> options) : base(options) { }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
