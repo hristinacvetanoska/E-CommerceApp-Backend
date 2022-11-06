@@ -17,9 +17,10 @@ namespace E_CommerceApp_Backend.Controllers
         [HttpGet(Name = "GetBasket")]
         public async Task<ActionResult<BasketDto>> GetBasket()
         {
-            var basket = await RetrieveBasket(GetBuyerId());
+            var basket = await RetrieveBasket();
 
             if (basket == null) return NotFound();
+
             return MapBasketToDto(basket);
         }
 
@@ -45,7 +46,7 @@ namespace E_CommerceApp_Backend.Controllers
         [HttpPost]
         public async Task<ActionResult<BasketDto>> AddIemToBasket(int productId, int quantity)
         {
-            var basket = await RetrieveBasket(GetBuyerId());
+            var basket = await RetrieveBasket();
             if (basket == null) basket = CreateBasket();
 
             var product = await _context.Products.FindAsync(productId);
@@ -86,12 +87,12 @@ namespace E_CommerceApp_Backend.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> RemoveBasketItem(int productId, int quantiy)
+        public async Task<ActionResult> RemoveBasketItem(int productId, int quantity)
         {
-            var basket = await RetrieveBasket(GetBuyerId());
+            var basket = await RetrieveBasket();
             if(basket == null) return NotFound();
 
-            basket.RemoveItem(productId, quantiy);
+            basket.RemoveItem(productId, quantity);
 
             var result = await _context.SaveChangesAsync() > 0;
 
@@ -102,7 +103,7 @@ namespace E_CommerceApp_Backend.Controllers
 
 
 
-        private async Task<Basket> RetrieveBasket(string buyerId)
+        private async Task<Basket> RetrieveBasket(/*string buyerId*/)
         {
             return await _context.Baskets
                 .Include(i => i.Items)

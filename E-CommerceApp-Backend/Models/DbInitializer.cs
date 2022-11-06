@@ -68,7 +68,7 @@ namespace E_CommerceApp_Backend.Models
                 {
                     Name = "Metal Frame Sunglasses",
                     Description = "Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus.",
-                    Price = 15000,
+                    Price = 1190,
                     PictureUrl = "/images/products/product8.jpg",
                     Brand = "Bags & Accessories",
                     Type = "Accessories",
@@ -90,7 +90,7 @@ namespace E_CommerceApp_Backend.Models
                     Name = "Nike Air Max Sneakers Running",
                     Description =
                         "Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy.",
-                    Price = 25000,
+                    Price = 2590,
                     PictureUrl = "/images/products/product1.png",
                     Brand = "Nike",
                     Type = "Shoes",
@@ -101,7 +101,7 @@ namespace E_CommerceApp_Backend.Models
                     Name = "Basketball Sneakers",
                     Description =
                         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna.",
-                    Price = 18999,
+                    Price = 2999,
                     PictureUrl = "/images/products/product2.png",
                     Brand = "Nike",
                     Type = "Shoes",
@@ -122,7 +122,7 @@ namespace E_CommerceApp_Backend.Models
                 {
                     Name = "City Rider Sneakers",
                     Description = "Aenean nec lorem. In porttitor. Donec laoreet nonummy augue.",
-                    Price = 15000,
+                    Price = 2540,
                     PictureUrl = "/images/products/product4.jpg",
                     Brand = "Puma",
                     Type = "Shoes",
@@ -133,7 +133,7 @@ namespace E_CommerceApp_Backend.Models
                     Name = "Suede Classix Women's Sneakers",
                     Description =
                         "The Suede hit the scene in 1968 and has been changing the game ever since.",
-                    Price = 18000,
+                    Price = 1890,
                     PictureUrl = "/images/products/product5.jpg",
                     Brand = "Puma",
                     Type = "Shoes",

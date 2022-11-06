@@ -101,7 +101,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Baskets");
+                    b.ToTable("Baskets", (string)null);
                 });
 
             modelBuilder.Entity("E_CommerceApp_Backend.Models.BasketItem", b =>
@@ -127,7 +127,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("BasketItems");
+                    b.ToTable("BasketItems", (string)null);
                 });
 
             modelBuilder.Entity("E_CommerceApp_Backend.Models.Cart", b =>
@@ -149,7 +149,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("E_CommerceApp_Backend.Models.Product", b =>
@@ -188,7 +188,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
