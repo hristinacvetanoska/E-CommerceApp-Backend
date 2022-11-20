@@ -1,31 +1,32 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using E_CommerceApp_Backend.Authentication;
+using Microsoft.AspNetCore.Identity;
 
 namespace E_CommerceApp_Backend.Models
 {
     public static class DbInitializer
     {
-        public static async Task Initialize(ECommerceContext context/*, UserManager<User> userManager*/)
+        public static async Task Initialize(ECommerceContext context, UserManager<ApplicationUser> userManager)
         {
-            //if (!userManager.Users.Any())
-            //{
-            //    var user = new User
-            //    {
-            //        UserName = "bob",
-            //        Email = "bob@test.com"
-            //    };
+            if (!userManager.Users.Any())
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = "bob",
+                    Email = "bob@test.com"
+                };
 
-            //    await userManager.CreateAsync(user, "Pa$$w0rd");
-            //    await userManager.AddToRoleAsync(user, "Member");
+                await userManager.CreateAsync(user, "Pa$$w0rd");
+                await userManager.AddToRoleAsync(user, "Member");
 
-            //    var admin = new User
-            //    {
-            //        UserName = "admin",
-            //        Email = "admin@test.com"
-            //    };
+                var admin = new ApplicationUser
+                {
+                    UserName = "admin",
+                    Email = "admin@test.com"
+                };
 
-            //    await userManager.CreateAsync(admin, "Pa$$w0rd");
-            //    await userManager.AddToRolesAsync(admin, new[] { "Member", "Admin" });
-            //}
+                await userManager.CreateAsync(admin, "Pa$$w0rd");
+                await userManager.AddToRolesAsync(admin, new[] { "Member", "Admin" });
+            }
 
             if (context.Products.Any()) return;
 
