@@ -47,7 +47,7 @@ builder.Services.AddSwaggerGen(c =>
 
 // For Identity
 builder.Services.AddIdentityCore<ApplicationUser>(opt => { opt.User.RequireUniqueEmail = true; })
-                .AddRoles<IdentityRole>()
+                .AddRoles<Role>()
                 .AddEntityFrameworkStores<ECommerceContext>()
                 .AddDefaultTokenProviders();
 
@@ -112,26 +112,7 @@ builder.Services.AddCors(options =>
 });
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var context = scope.ServiceProvider.GetRequiredService<ECommerceContext>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
-    await DbInitializer.Initialize(context, userManager);
-
-    //try
-    //{
-    //    await context.Database.MigrateAsync();
-    //    await DbInitializer.Initialize(context);
-    //}
-    //catch (Exception ex)
-    //{
-    //    logger.LogError(ex, "Problem migrating data");
-    //}
-
-}
 app.UseMiddleware<ExceptionMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -148,6 +129,36 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+
+using var scope = app.Services.CreateScope();
+var context = scope.ServiceProvider.GetRequiredService<ECommerceContext>();
+var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+try
+{
+    await context.Database.MigrateAsync();
+    await DbInitializer.Initialize(context, userManager);
+
+}
+catch (Exception ex)
+{
+    logger.LogError(ex, "Problem migrating data");
+}
+//var services = scope.ServiceProvider;
+
+
+    //try
+    //{
+    //    await context.Database.MigrateAsync();
+    //    await DbInitializer.Initialize(context);
+    //}
+    //catch (Exception ex)
+    //{
+    //    logger.LogError(ex, "Problem migrating data");
+    //}
+
 
 
 //app.MapControllers();

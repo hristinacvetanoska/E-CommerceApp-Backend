@@ -1,5 +1,6 @@
 ﻿using E_CommerceApp_Backend.DTOs;
 using E_CommerceApp_Backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceApp_Backend.Extensions
 {
@@ -23,5 +24,11 @@ namespace E_CommerceApp_Backend.Extensions
                 }).ToList()
             };
         }
+
+        public static IQueryable<Basket> RetrieveBasketWithItems(this IQueryable<Basket> query, string buyerId)
+        {
+            return query.Include(i => i.Items).ThenInclude(p => p.Product).Where(b => b.BuyerId == buyerId);
+        }
+
     }
 }

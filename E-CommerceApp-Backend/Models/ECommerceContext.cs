@@ -1,25 +1,34 @@
 ﻿using E_CommerceApp_Backend.Authentication;
+using E_CommerceApp_Backend.Models.OrderAggregate;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_CommerceApp_Backend.Models
 {
-    public class ECommerceContext : IdentityDbContext<ApplicationUser>
+    public class ECommerceContext : IdentityDbContext<ApplicationUser, Role, int>
     {
-        public ECommerceContext(DbContextOptions<ECommerceContext> options) : base(options) { }
+        public ECommerceContext(DbContextOptions options) : base(options) { }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Basket> Baskets { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<IdentityRole>()
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOne(a => a.Address)
+                .WithOne()
+                .HasForeignKey<UserAddress>(a => a.Id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Role>()
                 .HasData(
-                new IdentityRole { Name="Member", NormalizedName="MEMBER"},
-                new IdentityRole { Name = "Admin", NormalizedName = "ADMIN" });
+                new Role {Id=1, Name="Member", NormalizedName="MEMBER"},
+                new Role {Id=2, Name = "Admin", NormalizedName = "ADMIN" });
             //modelBuilder.Entity<ApplicationUser>()
             //    .HasOne(p => p.Cart)
             //    .WithOne(b => b.ApplicationUser)
