@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_CommerceApp_Backend.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    [Migration("20221120223921_OrderEntityAdded")]
-    partial class OrderEntityAdded
+    [Migration("20221128141004_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -125,16 +125,23 @@ namespace E_CommerceApp_Backend.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "13483d21-f2ec-4d36-8d43-3a3dba0cd0e3",
-                            Name = "Member",
-                            NormalizedName = "MEMBER"
+                            ConcurrencyStamp = "759a4581-c028-42bc-b3af-d7244f24a1bf",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "6a972361-c04d-495c-bd6d-6c3b4f1cf88d",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            ConcurrencyStamp = "9c56101f-d9c7-4105-9cc5-9547210562af",
+                            Name = "Seller",
+                            NormalizedName = "SELLER"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ConcurrencyStamp = "8bdcf730-7c94-4afc-99b5-c551b4e06a2f",
+                            Name = "Buyer",
+                            NormalizedName = "BUYER"
                         });
                 });
 
@@ -223,10 +230,6 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.Property<int>("OrderStatus")
                         .HasColumnType("int");
-
-                    b.Property<string>("PaymentIntentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("Subtotal")
                         .HasColumnType("bigint");

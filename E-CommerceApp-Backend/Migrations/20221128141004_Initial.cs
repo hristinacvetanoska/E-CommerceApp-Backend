@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace E_CommerceApp_Backend.Migrations
 {
-    public partial class OrderEntityAdded : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -79,8 +79,7 @@ namespace E_CommerceApp_Backend.Migrations
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Subtotal = table.Column<long>(type: "bigint", nullable: false),
                     DeliveryFee = table.Column<long>(type: "bigint", nullable: false),
-                    OrderStatus = table.Column<int>(type: "int", nullable: false),
-                    PaymentIntentId = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    OrderStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -308,12 +307,17 @@ namespace E_CommerceApp_Backend.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { 1, "13483d21-f2ec-4d36-8d43-3a3dba0cd0e3", "Member", "MEMBER" });
+                values: new object[] { 1, "759a4581-c028-42bc-b3af-d7244f24a1bf", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { 2, "6a972361-c04d-495c-bd6d-6c3b4f1cf88d", "Admin", "ADMIN" });
+                values: new object[] { 2, "9c56101f-d9c7-4105-9cc5-9547210562af", "Seller", "SELLER" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { 3, "8bdcf730-7c94-4afc-99b5-c551b4e06a2f", "Buyer", "BUYER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

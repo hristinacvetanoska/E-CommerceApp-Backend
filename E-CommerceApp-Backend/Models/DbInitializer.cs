@@ -16,7 +16,7 @@ namespace E_CommerceApp_Backend.Models
                 };
 
                 await userManager.CreateAsync(user, "Pa$$w0rd");
-                await userManager.AddToRoleAsync(user, "Member");
+                await userManager.AddToRoleAsync(user, "Buyer");
 
                 var admin = new ApplicationUser
                 {
@@ -25,7 +25,7 @@ namespace E_CommerceApp_Backend.Models
                 };
 
                 await userManager.CreateAsync(admin, "Pa$$w0rd");
-                await userManager.AddToRolesAsync(admin, new[] { "Member", "Admin" });
+                await userManager.AddToRolesAsync(admin, new[] { "Buyer", "Admin" });
             }
 
             if (context.Products.Any()) return;

@@ -1,6 +1,9 @@
-﻿using E_CommerceApp_Backend.Extensions;
+﻿using AutoMapper;
+using E_CommerceApp_Backend.DTOs;
+using E_CommerceApp_Backend.Extensions;
 using E_CommerceApp_Backend.Models;
 using E_CommerceApp_Backend.RequestHelpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -12,9 +15,13 @@ namespace E_CommerceApp_Backend.Controllers
     public class ProductsController : BaseApiController
     {
         private readonly ECommerceContext _context;
-        public ProductsController(ECommerceContext context)
+        private readonly IMapper _mapper;
+        private IWebHostEnvironment _webHostEnvironment;
+        public ProductsController(ECommerceContext context, IMapper mapper, IWebHostEnvironment webHostEnvironmenthe)
         {
             _context = context;
+            _mapper = mapper;
+            _webHostEnvironment = webHostEnvironmenthe;
         }
 
         [HttpGet]
@@ -35,7 +42,7 @@ namespace E_CommerceApp_Backend.Controllers
             return products;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name ="GetProduct")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var product= await _context.Products.FindAsync(id);
@@ -51,5 +58,74 @@ namespace E_CommerceApp_Backend.Controllers
 
             return Ok(new {brands, types});
         }
+
+
+        [Authorize(Roles = "Seller")]
+        [HttpPost]
+        public async Task<ActionResult<Product>> CreateProduct([FromForm] CreateProductDto productDto)
+        {
+            var product = _mapper.Map<Product>(productDto);
+
+            if (productDto.File != null)
+            {
+                var name = Path.Combine(_webHostEnvironment.WebRootPath + "/images/products/", Path.GetFileName(productDto.File.FileName));
+                await productDto.File.CopyToAsync(new FileStream(name, FileMode.Create));
+                product.PictureUrl = Path.Combine("http://localhost:5000"+"/images/products/", productDto.File.FileName);
+            }
+            _context.Products.Add(product);
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return CreatedAtRoute("GetProduct", new { Id = product.Id }, product);
+
+            return BadRequest(new ProblemDetails { Title = "Problem creating new product" });
+        }
+
+
+        [Authorize(Roles = "Seller")]
+        [HttpPut]
+        public async Task<ActionResult<Product>> UpdateProduct([FromForm] UpdateProductDto productDto)
+        {
+            var product = await _context.Products.FindAsync(productDto.Id);
+
+            if (product == null) return NotFound();
+
+            _mapper.Map(productDto, product);
+
+            if (productDto.File != null)
+            {
+                var name = Path.Combine(_webHostEnvironment.WebRootPath + "/images/products/", Path.GetFileName(productDto.File.FileName));
+                await productDto.File.CopyToAsync(new FileStream(name, FileMode.Create));
+                product.PictureUrl = Path.Combine("http://localhost:5000" + "/images/products/", productDto.File.FileName);
+            }
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return Ok(product);
+
+            return BadRequest(new ProblemDetails { Title = "Problem updating product" });
+        }
+
+        [Authorize(Roles = "Seller")]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+
+            if (product == null) return NotFound();
+
+            //if (!string.IsNullOrEmpty(product.PublicId))
+            //    await _imageService.DeleteImageAsync(product.PublicId);
+
+            _context.Products.Remove(product);
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result) return Ok();
+
+            return BadRequest(new ProblemDetails { Title = "Problem deleting product" });
+        }
+
+
     }
 }

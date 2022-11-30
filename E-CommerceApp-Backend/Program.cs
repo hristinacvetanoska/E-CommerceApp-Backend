@@ -1,10 +1,12 @@
 using E_CommerceApp_Backend.Authentication;
 using E_CommerceApp_Backend.Middleware;
 using E_CommerceApp_Backend.Models;
+using E_CommerceApp_Backend.RequestHelpers;
 using E_CommerceApp_Backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -13,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -121,7 +124,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+//app.UseStaticFiles((new StaticFileOptions()
+//{
+//    FileProvider = new PhysicalFileProvider(
+//                            Path.Combine(, @"images/products")),
+//    RequestPath = new PathString("/app-images")
+//}));
+app.UseStaticFiles();
 app.UseRouting();
 
 app.UseCors(MyAllowSpecificOrigins);

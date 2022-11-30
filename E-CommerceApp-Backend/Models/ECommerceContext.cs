@@ -27,8 +27,9 @@ namespace E_CommerceApp_Backend.Models
 
             modelBuilder.Entity<Role>()
                 .HasData(
-                new Role {Id=1, Name="Member", NormalizedName="MEMBER"},
-                new Role {Id=2, Name = "Admin", NormalizedName = "ADMIN" });
+                new Role {Id=1, Name = "Admin", NormalizedName = "ADMIN" }, 
+                new Role { Id = 2, Name = "Seller", NormalizedName = "SELLER" }, 
+                new Role { Id = 3, Name = "Buyer", NormalizedName = "BUYER" });
             //modelBuilder.Entity<ApplicationUser>()
             //    .HasOne(p => p.Cart)
             //    .WithOne(b => b.ApplicationUser)

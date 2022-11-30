@@ -123,16 +123,23 @@ namespace E_CommerceApp_Backend.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "f0b29740-5233-4a2f-884a-8bd70d0edf5d",
-                            Name = "Member",
-                            NormalizedName = "MEMBER"
+                            ConcurrencyStamp = "759a4581-c028-42bc-b3af-d7244f24a1bf",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "2c275464-381d-4097-93d2-33b6f88d1b18",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
+                            ConcurrencyStamp = "9c56101f-d9c7-4105-9cc5-9547210562af",
+                            Name = "Seller",
+                            NormalizedName = "SELLER"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ConcurrencyStamp = "8bdcf730-7c94-4afc-99b5-c551b4e06a2f",
+                            Name = "Buyer",
+                            NormalizedName = "BUYER"
                         });
                 });
 
