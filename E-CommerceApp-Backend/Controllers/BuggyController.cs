@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace E_CommerceApp_Backend.Controllers
-{    
+{
     public class BuggyController : BaseApiController
     {
         [HttpGet("not-found")]

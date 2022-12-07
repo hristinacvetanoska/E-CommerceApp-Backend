@@ -6,15 +6,18 @@ using E_CommerceApp_Backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
-
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.WriteIndented = true;
+});
 builder.Services.AddAutoMapper(typeof(MappingProfiles).Assembly);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -54,20 +57,9 @@ builder.Services.AddIdentityCore<ApplicationUser>(opt => { opt.User.RequireUniqu
                 .AddEntityFrameworkStores<ECommerceContext>()
                 .AddDefaultTokenProviders();
 
-// ova mene kako mi bese pred udemy proektov
-//builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-//                .AddEntityFrameworkStores<ECommerceContext>()
-
-//ova od udemy proektot kopirano
-//services.AddIdentityCore<User>(opt =>
-//{
-//    opt.User.RequireUniqueEmail = true;
-//})
-//     .AddRoles<Role>()
-// db context
 builder.Services.AddDbContext<ECommerceContext>(options =>
                  options.UseSqlServer(builder.Configuration.GetConnectionString("ECommerceShop")));//"Data Source=DESKTOP-LEVKLCV\\SQLEXPRESS;Database=ECommerceApp; Integrated Security=True"
-//builder.Services.AddTransient<DbInitializer>();
+
 // Adding Authentication
 builder.Services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(opt =>
@@ -82,25 +74,7 @@ builder.Services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme)
             .GetBytes(builder.Configuration["JWTSettings:TokenKey"]))
         };
     });
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-//});
 
-//.AddJwtBearer(options =>
-//{
-//    options.SaveToken = true;
-//    options.RequireHttpsMetadata = false;
-//    options.TokenValidationParameters = new TokenValidationParameters()
-//    {
-//        ValidateIssuer = true,
-//        ValidateAudience = true,
-//        ValidAudience = builder.Configuration["JWT:ValidAudience"],
-//        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
-//    };
-//});
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<TokenService>();
 
@@ -113,6 +87,9 @@ builder.Services.AddCors(options =>
                           builder.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");//AllowAnyOrigin().
                       });
 });
+
+builder.Services.AddHostedService<RepeatingService>();
+
 var app = builder.Build();
 
 
@@ -124,13 +101,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//app.UseHttpsRedirection();
-//app.UseStaticFiles((new StaticFileOptions()
-//{
-//    FileProvider = new PhysicalFileProvider(
-//                            Path.Combine(, @"images/products")),
-//    RequestPath = new PathString("/app-images")
-//}));
 app.UseStaticFiles();
 app.UseRouting();
 
@@ -156,21 +126,5 @@ catch (Exception ex)
 {
     logger.LogError(ex, "Problem migrating data");
 }
-//var services = scope.ServiceProvider;
-
-
-    //try
-    //{
-    //    await context.Database.MigrateAsync();
-    //    await DbInitializer.Initialize(context);
-    //}
-    //catch (Exception ex)
-    //{
-    //    logger.LogError(ex, "Problem migrating data");
-    //}
-
-
-
-//app.MapControllers();
 
 app.Run();

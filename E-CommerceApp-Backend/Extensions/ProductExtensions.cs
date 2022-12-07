@@ -26,10 +26,11 @@ namespace E_CommerceApp_Backend.Extensions
             return query.Where(p => p.Name.ToLower().Contains(lowerCaseSearchTerm));
         }
 
-        public static IQueryable<Product> Filter(this IQueryable<Product> query, string? brands, string? types)
+        public static IQueryable<Product> Filter(this IQueryable<Product> query, string? brands, string? types, string? sellerName)
         {
             var brandList = new List<string>();
             var typeList = new List<string>();
+            var sellerList = new List<string>();
 
             if (!string.IsNullOrEmpty(brands))
                 brandList.AddRange(brands.ToLower().Split(",").ToList());
@@ -37,12 +38,13 @@ namespace E_CommerceApp_Backend.Extensions
             if (!string.IsNullOrEmpty(types))
                 typeList.AddRange(types.ToLower().Split(",").ToList());
 
+            if(!string.IsNullOrEmpty(sellerName))
+                sellerList.AddRange(sellerName.ToLower().Split(",").ToList());
+
+
             query = (brandList.Count == 0) ? query : query.Where(p => brandList.Contains(p.Brand.ToLower()));
             query = (typeList.Count == 0) ? query : query.Where(p => typeList.Contains(p.Type.ToLower()));
-
-
-            //query = query.Where(p => brandList.Count == 0 || brandList.Contains(p.Brand.ToLower()));
-            //query = query.Where(p => typeList.Count == 0 || typeList.Contains(p.Type.ToLower()));
+            query = (sellerList.Count == 0) ? query : query.Where(p => sellerList.Contains(p.SellerName.ToLower()));
 
             return query;
         }

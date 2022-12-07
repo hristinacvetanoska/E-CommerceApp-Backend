@@ -4,6 +4,7 @@ using E_CommerceApp_Backend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_CommerceApp_Backend.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    partial class ECommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20221203193524_UpdateProductItemOrderedClass")]
+    partial class UpdateProductItemOrderedClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,21 +125,21 @@ namespace E_CommerceApp_Backend.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "a0fe08ab-7ecd-4c24-8724-1c000bfdeab5",
+                            ConcurrencyStamp = "98bef2fe-1667-44d2-8205-493e0941c2de",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "e01057a4-16e2-4df3-821a-954b1800f625",
+                            ConcurrencyStamp = "8fa43781-a216-4947-bd08-1869db1f6907",
                             Name = "Seller",
                             NormalizedName = "SELLER"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "2d79cf13-4c1a-4724-bda7-c52dc0b0df72",
+                            ConcurrencyStamp = "1792ead8-dc57-4f3c-8e67-5b12b3f8d7eb",
                             Name = "Buyer",
                             NormalizedName = "BUYER"
                         });
@@ -238,10 +240,6 @@ namespace E_CommerceApp_Backend.Migrations
                     b.Property<int>("QuantityInStock")
                         .HasColumnType("int");
 
-                    b.Property<string>("SellerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -338,10 +336,6 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.Property<int>("QuantityInStock")
                         .HasColumnType("int");
-
-                    b.Property<string>("SellerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .IsRequired()

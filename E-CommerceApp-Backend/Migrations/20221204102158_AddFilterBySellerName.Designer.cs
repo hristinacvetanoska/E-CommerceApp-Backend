@@ -4,6 +4,7 @@ using E_CommerceApp_Backend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_CommerceApp_Backend.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    partial class ECommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20221204102158_AddFilterBySellerName")]
+    partial class AddFilterBySellerName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,21 +125,21 @@ namespace E_CommerceApp_Backend.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "a0fe08ab-7ecd-4c24-8724-1c000bfdeab5",
+                            ConcurrencyStamp = "c5c2b8db-5753-4e9b-a4fd-ca9bf9d2ddc7",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "e01057a4-16e2-4df3-821a-954b1800f625",
+                            ConcurrencyStamp = "a208d32c-ec7b-4a31-a869-68735bcd3c65",
                             Name = "Seller",
                             NormalizedName = "SELLER"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "2d79cf13-4c1a-4724-bda7-c52dc0b0df72",
+                            ConcurrencyStamp = "a5c77320-7b40-4dca-980a-0e2d3c5a45c6",
                             Name = "Buyer",
                             NormalizedName = "BUYER"
                         });

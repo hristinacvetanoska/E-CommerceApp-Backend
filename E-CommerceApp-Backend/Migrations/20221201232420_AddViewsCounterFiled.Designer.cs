@@ -4,6 +4,7 @@ using E_CommerceApp_Backend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_CommerceApp_Backend.Migrations
 {
     [DbContext(typeof(ECommerceContext))]
-    partial class ECommerceContextModelSnapshot : ModelSnapshot
+    [Migration("20221201232420_AddViewsCounterFiled")]
+    partial class AddViewsCounterFiled
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -123,21 +125,21 @@ namespace E_CommerceApp_Backend.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "a0fe08ab-7ecd-4c24-8724-1c000bfdeab5",
+                            ConcurrencyStamp = "bfae03b6-a011-46dd-aeb4-2889abd41397",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "e01057a4-16e2-4df3-821a-954b1800f625",
+                            ConcurrencyStamp = "a0346a11-26b6-46e0-a75c-ca7e00b287ec",
                             Name = "Seller",
                             NormalizedName = "SELLER"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "2d79cf13-4c1a-4724-bda7-c52dc0b0df72",
+                            ConcurrencyStamp = "4b71e780-a5dc-400b-bb36-51c4c05b6083",
                             Name = "Buyer",
                             NormalizedName = "BUYER"
                         });
@@ -238,10 +240,6 @@ namespace E_CommerceApp_Backend.Migrations
                     b.Property<int>("QuantityInStock")
                         .HasColumnType("int");
 
-                    b.Property<string>("SellerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -306,7 +304,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("E_CommerceApp_Backend.Models.Product", b =>
@@ -338,10 +336,6 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.Property<int>("QuantityInStock")
                         .HasColumnType("int");
-
-                    b.Property<string>("SellerName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
                         .IsRequired()
@@ -591,9 +585,6 @@ namespace E_CommerceApp_Backend.Migrations
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<DateTime>("OrderData")
-                                .HasColumnType("datetime2");
-
                             b1.Property<string>("PictureUrl")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
@@ -603,7 +594,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                             b1.HasKey("OrderItemId");
 
-                            b1.ToTable("OrderItems");
+                            b1.ToTable("OrderItem");
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderItemId");

@@ -1,5 +1,8 @@
-﻿namespace E_CommerceApp_Backend.Models.OrderAggregate
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace E_CommerceApp_Backend.Models.OrderAggregate
 {
+    [Table("OrderItems")]
     public class OrderItem
     {
         public int Id { get; set; }

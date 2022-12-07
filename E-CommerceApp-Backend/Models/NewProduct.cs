@@ -1,6 +1,8 @@
-﻿namespace E_CommerceApp_Backend.Models
+﻿using E_CommerceApp_Backend.Authentication;
+
+namespace E_CommerceApp_Backend.Models
 {
-    public class Product
+    public class NewProduct
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -9,9 +11,9 @@
         public string PictureUrl { get; set; }
         public string Type { get; set; }
         public string Brand { get; set; }
-        public string SellerName { get; set; }
-
         public int QuantityInStock { get; set; }
-        public int ViewsCounter { get; set; } = 0;
+        public int UserId { get; set; }
+        public string SellerName { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

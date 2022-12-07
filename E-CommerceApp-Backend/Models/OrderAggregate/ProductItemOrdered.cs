@@ -8,5 +8,6 @@ namespace E_CommerceApp_Backend.Models.OrderAggregate
         public int ProductId { get; set; }
         public string Name { get; set; }
         public string PictureUrl { get; set; }
+        public DateTime OrderData { get; set; }
     }
 }
