@@ -46,7 +46,10 @@ namespace E_CommerceApp_Backend.Controllers
         public  async Task<ActionResult<Product>> ProductOfDay()
         {
             var date = DateTime.Now.DayOfWeek;
-            var bestsellerByDay =  _context.Items.Select(p => p.ItemOrdered).AsNoTracking().Where(t=>DateTime.Compare(t.OrderData, DateTime.Now.Date)==0);
+            var bestsellerByDay =  _context.Items
+                .Select(p => p.ItemOrdered)
+                .AsNoTracking()
+                .Where(t=>DateTime.Compare(t.OrderData, DateTime.Today.Date)==0);
             var distinctProductIds = await bestsellerByDay.Select(p => p.ProductId).Distinct().ToListAsync();
 
             var count = 0;

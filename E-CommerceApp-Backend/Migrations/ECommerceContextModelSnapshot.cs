@@ -157,7 +157,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Baskets");
+                    b.ToTable("Baskets", (string)null);
                 });
 
             modelBuilder.Entity("E_CommerceApp_Backend.Models.BasketItem", b =>
@@ -183,7 +183,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("BasketItems");
+                    b.ToTable("BasketItems", (string)null);
                 });
 
             modelBuilder.Entity("E_CommerceApp_Backend.Models.Cart", b =>
@@ -205,7 +205,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("E_CommerceApp_Backend.Models.NewProduct", b =>
@@ -253,7 +253,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("NewProducts");
+                    b.ToTable("NewProducts", (string)null);
                 });
 
             modelBuilder.Entity("E_CommerceApp_Backend.Models.OrderAggregate.Order", b =>
@@ -282,7 +282,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("E_CommerceApp_Backend.Models.OrderAggregate.OrderItem", b =>
@@ -306,7 +306,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("E_CommerceApp_Backend.Models.Product", b =>
@@ -352,7 +352,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("E_CommerceApp_Backend.Models.UserAddress", b =>
@@ -386,7 +386,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserAddress");
+                    b.ToTable("UserAddress", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -535,7 +535,7 @@ namespace E_CommerceApp_Backend.Migrations
 
             modelBuilder.Entity("E_CommerceApp_Backend.Models.OrderAggregate.Order", b =>
                 {
-                    b.OwnsOne("E_CommerceApp_Backend.Models.OrderAggregate.ShippingAddress", "ShippingAddress", b1 =>
+                    b.OwnsOne("E_CommerceApp_Backend.Models.OrderAggregate.Order.ShippingAddress#E_CommerceApp_Backend.Models.OrderAggregate.ShippingAddress", "ShippingAddress", b1 =>
                         {
                             b1.Property<int>("OrderId")
                                 .HasColumnType("int");
@@ -566,7 +566,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                             b1.HasKey("OrderId");
 
-                            b1.ToTable("Orders");
+                            b1.ToTable("Orders", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderId");
@@ -582,7 +582,7 @@ namespace E_CommerceApp_Backend.Migrations
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId");
 
-                    b.OwnsOne("E_CommerceApp_Backend.Models.OrderAggregate.ProductItemOrdered", "ItemOrdered", b1 =>
+                    b.OwnsOne("E_CommerceApp_Backend.Models.OrderAggregate.OrderItem.ItemOrdered#E_CommerceApp_Backend.Models.OrderAggregate.ProductItemOrdered", "ItemOrdered", b1 =>
                         {
                             b1.Property<int>("OrderItemId")
                                 .HasColumnType("int");
@@ -603,7 +603,7 @@ namespace E_CommerceApp_Backend.Migrations
 
                             b1.HasKey("OrderItemId");
 
-                            b1.ToTable("OrderItems");
+                            b1.ToTable("OrderItems", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("OrderItemId");

@@ -45,7 +45,6 @@ namespace E_CommerceApp_Backend.Controllers
             return products;
         }
 
-        //[Authorize]
         [HttpGet("{id}", Name ="GetProduct")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
@@ -91,7 +90,8 @@ namespace E_CommerceApp_Backend.Controllers
             {
                 Random rnd = new Random();
                 int num = rnd.Next();
-                var name = Path.Combine(_webHostEnvironment.WebRootPath + "/images/products/", num.ToString()+Path.GetFileName(productDto.File.FileName));
+                var path1 = _webHostEnvironment.WebRootPath + "/images/products/";
+                var name = Path.Combine(path1, num.ToString()+Path.GetFileName(productDto.File.FileName));
                 await productDto.File.CopyToAsync(new FileStream(name, FileMode.Create));
                 newProduct.PictureUrl = Path.Combine("http://localhost:5000"+"/images/products/", num.ToString() + productDto.File.FileName);
             }
@@ -107,6 +107,31 @@ namespace E_CommerceApp_Backend.Controllers
             return BadRequest(new ProblemDetails { Title = "Problem creating new product" });
         }
 
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("approveNewProducts")]
+        public async Task<ActionResult<Product>> ApproveProducts(bool response, int id)
+        {
+            var newProduct = _context.NewProducts.FirstOrDefault(i => i.Id == id);
+
+            if (!response)
+            {
+                _context.NewProducts.Remove(newProduct);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+
+            var product = _mapper.Map<Product>(newProduct);
+            _context.Products.Add(product);
+            var result = await _context.SaveChangesAsync() > 0;
+
+            _context.NewProducts.Remove(newProduct);
+            await _context.SaveChangesAsync();
+
+            if (result) return CreatedAtRoute("GetProduct", new { Id = product.Id }, product);
+
+            return BadRequest(new ProblemDetails { Title = "There was an error while approving the product, please try again!" });
+        }
 
         [Authorize(Roles = "Seller")]
         [HttpPut]
@@ -152,29 +177,5 @@ namespace E_CommerceApp_Backend.Controllers
             return BadRequest(new ProblemDetails { Title = "Problem deleting product" });
         }
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost("approveNewProducts")]
-        public async Task<ActionResult<Product>> ApproveProducts(bool response, int id)
-        {
-            var newProduct = _context.NewProducts.FirstOrDefault(i => i.Id == id);
-
-            if (!response)
-            {
-                _context.NewProducts.Remove(newProduct);
-                await _context.SaveChangesAsync();
-                return Ok();
-            }
-
-            var product = _mapper.Map<Product>(newProduct);
-            _context.Products.Add(product);
-            var result = await _context.SaveChangesAsync() > 0;
-
-            _context.NewProducts.Remove(newProduct);
-            await _context.SaveChangesAsync();
-
-            if (result) return CreatedAtRoute("GetProduct", new { Id = product.Id }, product);
-
-            return BadRequest(new ProblemDetails { Title = "There was an error while approving the product, please try again!" });
-        }
     }
 }

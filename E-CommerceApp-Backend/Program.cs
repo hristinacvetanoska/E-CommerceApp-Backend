@@ -58,7 +58,7 @@ builder.Services.AddIdentityCore<ApplicationUser>(opt => { opt.User.RequireUniqu
                 .AddDefaultTokenProviders();
 
 builder.Services.AddDbContext<ECommerceContext>(options =>
-                 options.UseSqlServer(builder.Configuration.GetConnectionString("ECommerceShop")));//"Data Source=DESKTOP-LEVKLCV\\SQLEXPRESS;Database=ECommerceApp; Integrated Security=True"
+                 options.UseSqlServer(builder.Configuration.GetConnectionString("ECommerceShop")));
 
 // Adding Authentication
 builder.Services.AddAuthentication( JwtBearerDefaults.AuthenticationScheme)
@@ -84,7 +84,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       builder =>
                       {
-                          builder.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");//AllowAnyOrigin().
+                          builder.AllowAnyHeader().AllowAnyMethod()
+                          .AllowCredentials().WithOrigins("http://localhost:3000");
                       });
 });
 
